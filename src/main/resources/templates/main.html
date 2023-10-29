@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="content">
-            <form action="/update" method="post">
+            <form method="post">
                 <div>
                     <input type="hidden" name="id" th:value="${targetPost.id}">
                 </div>
@@ -34,7 +34,10 @@
                     <textarea name="content" cols="30" rows="10" th:text="${targetPost.content}"></textarea>
                 </div>
                 <div>
-                    <input type="submit" value="수정">
+                    <input type="submit" value="수정" formaction="/update">
+                </div>
+                <div>
+                    <input type="submit" value="삭제" formaction="/delete">
                 </div>
             </form>
         </div>

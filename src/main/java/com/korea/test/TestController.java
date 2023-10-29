@@ -65,6 +65,12 @@ public class TestController {
         return "redirect:/detail/" + id;
     }
 
+    @PostMapping("/delete")
+    public String delete(Long id) {
+        postRepository.deleteById(id);
+        return "redirect:/";
+    }
+
     private void saveDefault() {
         Post post = new Post();
         post.setTitle("new title..");
