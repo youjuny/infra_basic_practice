@@ -53,6 +53,11 @@ public class TestController {
     @PostMapping("/update")
     public String update(Long id, String title, String content) {
         Post post = postRepository.findById(id).get();
+
+        if(title.trim().length() == 0) {
+            title = "제목 없음";
+        }
+
         post.setTitle(title);
         post.setContent(content);
 
