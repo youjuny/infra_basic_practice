@@ -30,6 +30,10 @@ a{
     text-align: center;
 }
 
+.selected-item {
+    background: blue;
+}
+
 .content {
     background: lightseagreen;
     width:90%;

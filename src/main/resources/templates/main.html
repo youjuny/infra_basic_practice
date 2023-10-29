@@ -12,7 +12,7 @@
         <div class="side-menu">
             <!--            3. 템플릿에서 게시물 목록 출력-->
             <ul>
-                <li th:each="post : ${postList}">
+                <li th:each="post : ${postList}" th:class="${post.id == targetPost.id} ? 'selected-item' : '' ">
                     <a th:href="@{|/detail/${post.id}|}" th:text="${post.title}"></a>
                 </li>
             </ul>
