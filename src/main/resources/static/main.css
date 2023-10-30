@@ -23,7 +23,12 @@ a{
     display: flex;
 }
 
-.side-menu {
+.side-notebook {
+    background: aqua;
+    width: 10%;
+}
+
+.side-page {
     background: indianred;
     width:10%;
     height:800px;
@@ -37,5 +42,5 @@ a{
 
 .content {
     background: lightseagreen;
-    width:90%;
+    width:80%;
 }

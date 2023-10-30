@@ -1,5 +1,6 @@
 package com.korea.test;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-public class TestController {
+@RequiredArgsConstructor
+public class NotePageController {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final NotePageService notePageService;
 
     @RequestMapping("/test")
     @ResponseBody public String test() {
@@ -22,61 +23,54 @@ public class TestController {
     @RequestMapping("/")
     public String main(Model model) {
         //1. DB에서 데이터 꺼내오기
-        List<Post> postList = postRepository.findAll();
+        List<NotePage> notePageList = notePageService.getNotePageList();
 
-        if(postList.isEmpty()) {
-            saveDefault();
+        if(notePageList.isEmpty()) {
+            notePageService.saveDefaultNotePage();
             return "redirect:/";
         }
 
         //2. 꺼내온 데이터를 템플릿으로 보내기
-        model.addAttribute("postList", postList);
-        model.addAttribute("targetPost", postList.get(0));
+        model.addAttribute("notePageList", notePageList);
+        model.addAttribute("targetPost", notePageList.get(0));
 
         return "main";
     }
 
     @PostMapping("/write")
     public String write() {
-        saveDefault();
+        notePageService.saveDefaultNotePage();
         return "redirect:/";
     }
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Long id) {
-        Post post = postRepository.findById(id).get();
-        model.addAttribute("targetPost", post);
-        model.addAttribute("postList", postRepository.findAll());
+        NotePage notePage = notePageService.getNotePageById(id);
+
+        model.addAttribute("targetPost", notePage);
+        model.addAttribute("notePageList", notePageService.getNotePageList());
 
         return "main";
     }
     @PostMapping("/update")
     public String update(Long id, String title, String content) {
-        Post post = postRepository.findById(id).get();
+        NotePage notePage = notePageService.getNotePageById(id);
 
         if(title.trim().length() == 0) {
             title = "제목 없음";
         }
 
-        post.setTitle(title);
-        post.setContent(content);
+        notePage.setTitle(title);
+        notePage.setContent(content);
 
-        postRepository.save(post);
+        notePageService.save(notePage);
         return "redirect:/detail/" + id;
     }
 
     @PostMapping("/delete")
     public String delete(Long id) {
-        postRepository.deleteById(id);
+        notePageService.deleteById(id);
         return "redirect:/";
     }
 
-    private void saveDefault() {
-        Post post = new Post();
-        post.setTitle("new title..");
-        post.setContent("");
-        post.setCreateDate(LocalDateTime.now());
-
-        postRepository.save(post);
-    }
 }

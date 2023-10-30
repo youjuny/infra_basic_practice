@@ -9,11 +9,18 @@
 <div class="wrap">
     <div class="logo"><a href="/">logo</a></div>
     <div class="content-wrap">
-        <div class="side-menu">
+        <div class="side-notebook">
+            <ul>
+                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'selected-item' : '' ">
+                    <a href="#" th:text="${notebook.name}"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="side-page">
             <!--            3. 템플릿에서 게시물 목록 출력-->
             <ul>
-                <li th:each="post : ${postList}" th:class="${post.id == targetPost.id} ? 'selected-item' : '' ">
-                    <a th:href="@{|/detail/${post.id}|}" th:text="${post.title}"></a>
+                <li th:each="notePage : ${notePageList}" th:class="${notePage.id == targetPost.id} ? 'selected-item' : '' ">
+                    <a th:href="@{|/detail/${notePage.id}|}" th:text="${notePage.title}"></a>
                 </li>
             </ul>
             <div>
