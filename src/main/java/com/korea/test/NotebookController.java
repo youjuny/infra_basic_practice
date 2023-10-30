@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -50,5 +51,12 @@ public class NotebookController {
         model.addAttribute("targetNotebook", notebookList.get(0));
 
         return "main";
+    }
+
+    @PostMapping("/write")
+    public String write() {
+        Notebook notebook = notebookService.saveDefaultNotebook();
+        notePageService.saveDefaultNotePage(notebook);
+        return "redirect:/";
     }
 }

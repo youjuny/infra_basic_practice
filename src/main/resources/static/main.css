@@ -26,6 +26,7 @@ a{
 .side-notebook {
     background: aqua;
     width: 10%;
+    text-align: center;
 }
 
 .side-page {

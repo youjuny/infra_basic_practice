@@ -15,6 +15,11 @@
                     <a th:href="@{|/notebook/${notebook.id}|}" th:text="${notebook.name}"></a>
                 </li>
             </ul>
+            <div>
+                <form action="/notebook/write" method="post">
+                    <input type="submit" value="추가">
+                </form>
+            </div>
         </div>
         <div class="side-page">
             <!--            3. 템플릿에서 게시물 목록 출력-->

@@ -58,10 +58,11 @@ public class NotePageController {
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Long id) {
         NotePage notePage = notePageService.getNotePageById(id);
+        List<NotePage> notePageList = notePageService.getNotePageListByNotebook(notePage.getNotebook());
         List<Notebook> notebookList = notebookService.getNotebookList();
 
         model.addAttribute("targetPost", notePage);
-        model.addAttribute("notePageList", notePageService.getNotePageList());
+        model.addAttribute("notePageList", notePageList);
         model.addAttribute("notebookList", notebookList);
         model.addAttribute("targetNotebook", notePage.getNotebook());
 

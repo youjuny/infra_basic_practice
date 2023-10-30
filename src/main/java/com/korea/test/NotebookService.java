@@ -3,6 +3,7 @@ package com.korea.test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +25,11 @@ public class NotebookService {
         throw new IllegalArgumentException("해당 노트북은 존재하지 않습니다.");
     }
 
-    public void saveDefaultNotebook() {
+    public Notebook saveDefaultNotebook() {
         Notebook notebook = new Notebook();
         notebook.setName("새노트");
+        notebook.setCreateDate(LocalDateTime.now());
 
-        notebookRepository.save(notebook);
+        return notebookRepository.save(notebook);
     }
 }
