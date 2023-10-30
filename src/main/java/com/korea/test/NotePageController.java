@@ -14,6 +14,7 @@ import java.util.List;
 public class NotePageController {
 
     private final NotePageService notePageService;
+    private final NotebookService notebookService;
 
     @RequestMapping("/test")
     @ResponseBody public String test() {
@@ -23,32 +24,46 @@ public class NotePageController {
     @RequestMapping("/")
     public String main(Model model) {
         //1. DB에서 데이터 꺼내오기
-        List<NotePage> notePageList = notePageService.getNotePageList();
+        List<Notebook> notebookList = notebookService.getNotebookList();
+
+        if(notebookList.isEmpty()) {
+            notebookService.saveDefaultNotebook();
+            return "redirect:/";
+        }
+
+        Notebook targetNotebook = notebookList.get(0);
+        List<NotePage> notePageList = notePageService.getNotePageListByNotebook(targetNotebook);
 
         if(notePageList.isEmpty()) {
-            notePageService.saveDefaultNotePage();
+            notePageService.saveDefaultNotePage(targetNotebook);
             return "redirect:/";
         }
 
         //2. 꺼내온 데이터를 템플릿으로 보내기
         model.addAttribute("notePageList", notePageList);
         model.addAttribute("targetPost", notePageList.get(0));
+        model.addAttribute("targetNotebook", targetNotebook);
+        model.addAttribute("notebookList", notebookList);
 
         return "main";
     }
 
     @PostMapping("/write")
-    public String write() {
-        notePageService.saveDefaultNotePage();
+    public String write(Long notebookId) {
+        Notebook notebook = notebookService.getNotebookById(notebookId);
+        notePageService.saveDefaultNotePage(notebook);
         return "redirect:/";
     }
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Long id) {
         NotePage notePage = notePageService.getNotePageById(id);
+        List<Notebook> notebookList = notebookService.getNotebookList();
 
         model.addAttribute("targetPost", notePage);
         model.addAttribute("notePageList", notePageService.getNotePageList());
+        model.addAttribute("notebookList", notebookList);
+        model.addAttribute("targetNotebook", notePage.getNotebook());
 
         return "main";
     }

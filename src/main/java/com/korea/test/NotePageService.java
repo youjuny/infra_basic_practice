@@ -12,11 +12,12 @@ import java.util.Optional;
 public class NotePageService {
 
     private final NotePageRepository notePageRepository;
-    public void saveDefaultNotePage() {
+    public void saveDefaultNotePage(Notebook notebook) {
         NotePage notePage = new NotePage();
         notePage.setTitle("new title..");
         notePage.setContent("");
         notePage.setCreateDate(LocalDateTime.now());
+        notePage.setNotebook(notebook);
 
         notePageRepository.save(notePage);
     }
@@ -40,5 +41,9 @@ public class NotePageService {
 
     public void deleteById(Long id) {
         notePageRepository.deleteById(id);
+    }
+
+    public List<NotePage> getNotePageListByNotebook(Notebook targetNotebook) {
+        return notePageRepository.findByNotebook(targetNotebook);
     }
 }
