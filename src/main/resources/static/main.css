@@ -27,6 +27,7 @@ a{
     background: indianred;
     width:10%;
     height:800px;
+    overflow: auto;   /* 컨텐츠가 박스를 벗어나면 스크롤바 표시 */
     text-align: center;
 }
 

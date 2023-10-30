@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="wrap">
-    <div class="logo">logo</div>
+    <div class="logo"><a href="/">logo</a></div>
     <div class="content-wrap">
         <div class="side-menu">
             <!--            3. 템플릿에서 게시물 목록 출력-->
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="content">
-            <form method="post">
+            <form id="updateForm" method="post">
                 <div>
                     <input type="hidden" name="id" th:value="${targetPost.id}">
                 </div>
@@ -34,14 +34,31 @@
                     <textarea name="content" cols="30" rows="10" th:text="${targetPost.content}"></textarea>
                 </div>
                 <div>
-                    <input type="submit" value="수정" formaction="/update">
+                    <input type="button" value="수정" onclick="updateFormAction(this, ACTIONS_UPDATE)">
                 </div>
                 <div>
-                    <input type="submit" value="삭제" formaction="/delete">
+                    <input type="button" value="삭제" onclick="updateFormAction(this, ACTIONS_DELETE)">
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    ACTIONS_UPDATE = {
+        'url' : '/update',
+        'msg' : '수정하시겠습니까?'
+    };
+    ACTIONS_DELETE = {
+        'url' : '/delete',
+        'msg' : '삭제하시겠습니까?'
+    }
+
+    function updateFormAction(input, action) {
+        if(confirm(action.msg)) {
+            input.form.action = action.url;
+            input.form.submit();
+        }
+    }
+</script>
 </body>
 </html>
