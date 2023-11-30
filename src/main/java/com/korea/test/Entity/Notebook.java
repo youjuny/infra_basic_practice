@@ -1,4 +1,4 @@
-package com.korea.test;
+package com.korea.test.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class Notebook {
     @Column(nullable = false)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "notebook")
+    @OneToMany(mappedBy = "notebook", cascade = CascadeType.REMOVE)
     private List<NotePage> notePageList;
 
 }

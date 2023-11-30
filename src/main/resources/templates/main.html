@@ -16,10 +16,27 @@
                 </li>
             </ul>
             <div>
-                <form action="/notebook/write" method="post">
+                <form th:action="@{|/notebook/update|}" method="post">
+                    <input type="hidden" name="id" th:value="${targetNotebook.id}">
+                    <input type="text" name="name" th:value="${targetNotebook.name}">
+                    <input type="submit" value="수정">
+                </form>
+            </div>
+            <div>
+                <form th:action="@{|/notebook/write|}" method="post">
                     <input type="submit" value="추가">
                 </form>
             </div>
+            <div>
+                <form th:action="@{|/notebook/delete|}" method="post">
+                    <input type="hidden" name="id" th:value="${targetNotebook.id}">
+                    <input type="submit" value="삭제">
+                </form>
+            </div>
+            <a th:href="@{/member/signup}">회원가입</a>
+            <br>
+            <a sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그 아웃</a>
         </div>
         <div class="side-page">
             <!--            3. 템플릿에서 게시물 목록 출력-->
@@ -29,7 +46,7 @@
                 </li>
             </ul>
             <div>
-                <form action="/write" method="post">
+                <form th:action="@{|/write|}" method="post">
                     <input type="hidden" name="notebookId" th:value="${targetNotebook.id}">
                     <input type="submit" value="추가">
                 </form>

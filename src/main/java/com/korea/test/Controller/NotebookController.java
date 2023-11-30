@@ -1,5 +1,9 @@
-package com.korea.test;
+package com.korea.test.Controller;
 
+import com.korea.test.Entity.NotePage;
+import com.korea.test.Entity.Notebook;
+import com.korea.test.Service.NotePageService;
+import com.korea.test.Service.NotebookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,4 +63,30 @@ public class NotebookController {
         notePageService.saveDefaultNotePage(notebook);
         return "redirect:/";
     }
+    
+    @PostMapping("/delete")
+    public String delete(Long id) {
+        
+        notebookService.deleteById(id);
+        
+        return "redirect:/";
+    }
+    
+    
+    @PostMapping("/update")
+    public String update(Long id, String name) {
+        
+        Notebook notebook = notebookService.getNotebookById(id);
+        
+        if(name.trim().length() == 0) {
+            name = "노트 제목 없음";
+        }
+        
+        notebook.setName(name);
+        
+        notebookService.updateName(id, name);
+        
+        return "redirect:/";
+    }
+    
 }

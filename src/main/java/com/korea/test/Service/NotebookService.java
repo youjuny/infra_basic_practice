@@ -1,5 +1,7 @@
-package com.korea.test;
+package com.korea.test.Service;
 
+import com.korea.test.Entity.Notebook;
+import com.korea.test.Repository.NotebookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,15 @@ public class NotebookService {
         notebook.setCreateDate(LocalDateTime.now());
 
         return notebookRepository.save(notebook);
+    }
+    
+    public void deleteById(Long id) {
+        notebookRepository.deleteById(id);
+    }
+    
+    public void updateName(Long id, String name) {
+        Notebook notebook = getNotebookById(id);
+        notebook.setName(name);
+        notebookRepository.save(notebook);
     }
 }

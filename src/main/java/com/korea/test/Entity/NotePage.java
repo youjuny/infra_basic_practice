@@ -1,4 +1,4 @@
-package com.korea.test;
+package com.korea.test.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
